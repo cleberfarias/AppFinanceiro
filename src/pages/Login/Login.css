@@ -1,0 +1,167 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.login-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.login-form-container {
+  background: linear-gradient(135deg, #3B82F6, #1E3A8A); /* Degradê do azul claro ao escuro */
+  color: #ffffff;
+  padding: 40px;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form-content {
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.forgot-password {
+  color: #90cdf4;
+  margin-top: 10px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.login-button {
+  background: linear-gradient(135deg, #3B82F6, #1E3A8A); /* Degradê do azul claro ao escuro */
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.login-button:hover {
+  background: linear-gradient(135deg, #1E3A8A, #1E40AF); /* Degradê mais escuro no hover */
+}
+
+.logo-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.promo-section {
+  position: relative;
+  width: 50%;
+  background: url('') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.promo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.promo-content {
+  position: relative;
+  color: white;
+  text-align: center;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.promo-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.promo-content p {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.steps-list {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.steps-list li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.steps-list li span {
+  background: linear-gradient(135deg, #3B82F6, #1E3A8A); /* Degradê do azul claro ao escuro */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+  transition: background 0.3s ease;
+}
+
+.steps-list li span:hover {
+  background: linear-gradient(135deg, #1E3A8A, #1E40AF); /* Degradê mais escuro no hover */
+}
+
+.promo-button {
+  background: linear-gradient(135deg, #3B82F6, #1E3A8A); /* Degradê do azul claro ao escuro */
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.promo-button:hover {
+  background: linear-gradient(135deg, #1E3A8A, #1E40AF); /* Degradê mais escuro no hover */
+}
+
+.highlight {
+  color: #90cdf4;
+}

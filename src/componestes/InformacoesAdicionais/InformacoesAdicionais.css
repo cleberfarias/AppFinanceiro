@@ -1,0 +1,18 @@
+.informacoes-container {
+    margin-top: 20px;
+    color: #ffffff;
+  }
+  .submit-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #5dade2;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  
+  /* Estilo para o hover do botão de enviar */
+  .submit-button:hover {
+    background-color: #a1c12e; /* Cor do botão ao passar o mouse */
+  }  

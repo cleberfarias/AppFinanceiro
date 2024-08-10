@@ -1,0 +1,79 @@
+/* SidebarMenu.css */
+
+.sidebar-menu {
+    width: 250px;
+    height: 100vh;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: width 0.3s;
+    overflow: hidden; /* Esconde o conteúdo fora da área visível */
+  }
+  
+  .sidebar-menu.collapsed {
+    width: 80px; /* Largura quando recolhido */
+  }
+  
+  .sidebar-menu .menu-content {
+    display: block;
+    transition: opacity 0.3s;
+  }
+  
+  .sidebar-menu.collapsed .menu-content {
+    opacity: 0; /* Esconde o conteúdo quando recolhido */
+    pointer-events: none; /* Desativa a interação com o conteúdo escondido */
+  }
+  
+  .sidebar-menu .menu-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar-menu .menu-content ul li {
+    margin: 15px 0;
+  }
+  
+  .sidebar-menu .menu-content ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    white-space: nowrap;
+  }
+  
+  .sidebar-menu .menu-content ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .toggle-button {
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .toggle-button:hover {
+    background-color: #555;
+  }
+  
+  .content-container {
+    margin-left: 250px; /* Inicialmente o menu está expandido */
+    padding: 20px;
+    width: calc(100% - 250px);
+    transition: margin-left 0.3s, width 0.3s;
+  }
+  
+  .sidebar-menu.collapsed + .content-container {
+    margin-left: 80px; /* Ajuste a largura quando o menu está recolhido */
+  }
+  
