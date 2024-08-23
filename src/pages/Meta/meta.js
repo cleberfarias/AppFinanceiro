@@ -231,7 +231,7 @@ function Meta() {
 
   return (
     <div className="meta-page">
-      <SidebarMenu /> {/* Adicione o SidebarMenu */}
+      
       <div className="meta-container">
         <Formulario onFormSubmit={handleFormSubmit} />
         <Relatorios relatorios={relatorios} />

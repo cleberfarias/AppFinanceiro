@@ -1,25 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaHome, FaUser, FaChartBar, FaWallet } from 'react-icons/fa';
+
 import './SidebarMenu.css';
 
 const SidebarMenu = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
-  const toggleMenu = () => {
-    setIsCollapsed(!isCollapsed);
-  };
-
   return (
-    <div className={`sidebar-menu ${isCollapsed ? 'collapsed' : ''}`}>
-      <button className="toggle-button" onClick={toggleMenu}>
-        {isCollapsed ? '☰' : '✖'}
-      </button>
-      <div className={`menu-content ${isCollapsed ? 'hidden' : ''}`}>
+    <div className="sidebar-menu">
+      <div className="menu-content">
         <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/login">Login</Link></li>
-          <li><Link to="/meta">Meta</Link></li>
-          <li><Link to="/financeiro">Financeiro</Link></li>
+          <li>
+            <Link to="/Home" className="menu-item">
+              <FaHome />
+              <span className="menu-text">Home</span>
+            </Link>
+          </li>
+          
+          <li>
+            <Link to="/meta" className="menu-item">
+              <FaChartBar />
+              <span className="menu-text">Meta</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/financeiro" className="menu-item">
+              <FaWallet />
+              <span className="menu-text">Financeiro</span>
+            </Link>
+            <li>
+            <Link to="/login" className="menu-item">
+              <FaUser />
+              <span className="menu-text">Login</span>
+            </Link>
+          </li>
+          </li>
         </ul>
       </div>
     </div>

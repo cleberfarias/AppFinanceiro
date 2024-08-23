@@ -1,51 +1,75 @@
-  
-  /* Estilo para o contêiner principal do formulário */
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 500px;
-  }
-  
-  /* Estilo para os campos de entrada */
-  .input-field {
-    margin-bottom: 10px;
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  /* Estilo para as labels */
+/* Estilo para o contêiner principal do formulário */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto; /* Centraliza o contêiner horizontalmente */
+  padding: 20px; /* Adiciona padding ao redor do contêiner */
+}
+
+/* Estilo para os campos de entrada */
+.input-field {
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd; /* Adiciona borda ao campo de entrada */
+  border-radius: 5px;
+  font-size: 14px; /* Ajusta o tamanho da fonte */
+}
+
+/* Estilo para as labels */
 .label {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  font-weight: bold; /* Adiciona negrito às labels */
+  margin-bottom: 5px; /* Adiciona margem abaixo da label */
+}
+
+/* Estilo para os checkboxes */
+.checkbox {
+  margin-right: 5px;
+  align-self: flex-start; /* Alinhar os checkboxes ao topo */
+}
+
+/* Estilo para o botão de enviar */
+.submit-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #5dade2; /* Cor de fundo do botão */
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px; /* Ajusta o tamanho da fonte do botão */
+  transition: background-color 0.3s; /* Adiciona transição suave na cor do fundo */
+}
+
+/* Estilo para o hover do botão de enviar */
+.submit-button:hover {
+  background-color: #a1c12e; /* Cor do botão ao passar o mouse */
+}
+
+/* Estilo para o texto do formulário */
+.texto-form {
+  color: #ffffff; /* Define a cor do texto como branco */
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 15px; /* Ajusta o padding para telas menores */
+    max-width: 100%; /* Ajusta a largura máxima para ocupar 100% da tela */
   }
-  
-  /* Estilo para os checkboxes */
-  .checkbox {
-    margin-right: 5px;
-    align-self: flex-start; /* Alinhar os checkboxes ao topo */
+
+  .input-field {
+    font-size: 16px; /* Ajusta o tamanho da fonte dos campos em telas menores */
+    padding: 12px; /* Aumenta o padding para facilitar a digitação */
   }
-  
-  
-  /* Estilo para o botão de enviar */
+
   .submit-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #5dade2;
-    border: none;
-    border-radius: 5px;
-    color: #ffffff;
-    cursor: pointer;
+    font-size: 18px; /* Aumenta o tamanho da fonte do botão em telas menores */
+    padding: 12px 25px; /* Ajusta o padding do botão para maior conforto */
   }
-  
-  /* Estilo para o hover do botão de enviar */
-  .submit-button:hover {
-    background-color: #a1c12e; /* Cor do botão ao passar o mouse */
-  }
-  .texto-form{
-    color: #ffffff;
-  }
-  
+}

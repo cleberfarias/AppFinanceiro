@@ -1,18 +1,39 @@
+/* Estilo para o contêiner de informações */
 .informacoes-container {
-    margin-top: 20px;
-    color: #ffffff;
+  margin-top: 20px;
+  color: #ffffff;
+  padding: 20px; /* Adiciona padding ao contêiner */
+  background-color: #333; /* Define uma cor de fundo para contraste */
+  border-radius: 8px; /* Adiciona bordas arredondadas */
+}
+
+/* Estilo para o botão de enviar */
+.submit-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #5dade2;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px; /* Ajusta o tamanho da fonte */
+  transition: background-color 0.3s; /* Adiciona transição suave na cor de fundo */
+}
+
+/* Estilo para o hover do botão de enviar */
+.submit-button:hover {
+  background-color: #a1c12e; /* Cor do botão ao passar o mouse */
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .informacoes-container {
+    padding: 15px; /* Reduz o padding em telas menores */
+    margin-top: 15px; /* Ajusta a margem superior */
   }
+
   .submit-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #5dade2;
-    border: none;
-    border-radius: 5px;
-    color: #ffffff;
-    cursor: pointer;
+    font-size: 14px; /* Reduz o tamanho da fonte do botão */
+    padding: 8px 15px; /* Ajusta o padding do botão para se adaptar melhor */
   }
-  
-  /* Estilo para o hover do botão de enviar */
-  .submit-button:hover {
-    background-color: #a1c12e; /* Cor do botão ao passar o mouse */
-  }  
+}

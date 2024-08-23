@@ -1,90 +1,129 @@
 /* Estilo para o corpo do documento */
 body {
-    display: flex; /* Usar flexbox para o layout */
-    justify-content: center; /* Centralizar os itens no eixo secundário (horizontal) */
-    align-items: center; /* Centralizar os itens no eixo principal (vertical) */
-    height: 100vh; /* Altura total da tela */
-    margin: 0; /* Remover margens padrão */
-    font-family: Arial, sans-serif; /* Usar a fonte Arial ou fonte genérica */
-    background-image: url(../../imagem/fundo2.png);
-    background-size: cover; /* Ajustar o tamanho da imagem para cobrir toda a área */
-    background-position: center; /* Centralizar a imagem na página */
-  }
-  
-  /* Estilo para o contêiner principal do formulário */
+  display: flex; /* Usar flexbox para o layout */
+  justify-content: center; /* Centralizar os itens no eixo secundário (horizontal) */
+  align-items: center; /* Centralizar os itens no eixo principal (vertical) */
+  height: 100vh; /* Altura total da tela */
+  margin: 0; /* Remover margens padrão */
+  font-family: Arial, sans-serif; /* Usar a fonte Arial ou fonte genérica */
+  background-image: url(../../imagem/fundo2.png);
+  background-size: cover; /* Ajustar o tamanho da imagem para cobrir toda a área */
+  background-position: center; /* Centralizar a imagem na página */
+}
+
+/* Estilo para o contêiner principal do formulário */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  padding: 20px; /* Adiciona padding ao contêiner */
+  background: rgba(0, 0, 0, 0.5); /* Adiciona fundo semitransparente para contraste */
+  border-radius: 10px; /* Adiciona bordas arredondadas */
+}
+
+/* Estilo para os campos de entrada */
+.input-field {
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffffff; /* Adiciona fundo branco para os campos de entrada */
+}
+
+/* Estilo para as labels */
+.label {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+}
+
+/* Estilo para os checkboxes */
+.checkbox {
+  margin-right: 5px;
+  align-self: flex-start; /* Alinhar os checkboxes ao topo */
+}
+
+/* Estilo para o botão de enviar */
+.submit-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #5dade2;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px; /* Ajusta o tamanho da fonte */
+}
+
+/* Estilo para o hover do botão de enviar */
+.submit-button:hover {
+  background-color: #2e86c1; /* Cor do botão ao passar o mouse */
+}
+
+/* Estilo para a tabela */
+.table {
+  width: 100%; /* Largura total */
+  border-collapse: collapse; /* Colapsar as bordas da tabela */
+}
+
+/* Estilo para células do cabeçalho */
+.table th {
+  padding: 10px; /* Adicionar preenchimento interno */
+  border: 1px solid #ffffff; /* Cor da borda branca */
+  text-align: left; /* Alinhar o texto à esquerda */
+  font-weight: bold; /* Tornar o texto em negrito */
+  color: #ffffff;
+}
+
+/* Estilo para células de dados */
+.table td {
+  padding: 10px; /* Adicionar preenchimento interno */
+  border: 1px solid #ffffff; /* Cor da borda branca */
+  text-align: left; /* Alinhar o texto à esquerda */
+  color: #ffffff;
+}
+
+/* Estilo para o texto do título */
+.text-titulo {
+  color: #ffffff;
+  text-align: center;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
   .form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 500px;
+    padding: 15px; /* Reduz o padding em telas menores */
+    max-width: 90%; /* Ajusta a largura máxima em telas menores */
   }
-  
-  /* Estilo para os campos de entrada */
+
   .input-field {
-    margin-bottom: 10px;
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
+    padding: 8px; /* Reduz o padding dos campos de entrada */
   }
-  
-  /* Estilo para as labels */
-  .label {
-    display: flex;
-    align-items: center;
-    color: #ffffff;
-  }
-  
-  /* Estilo para os checkboxes */
-  .checkbox {
-    margin-right: 5px;
-    align-self: flex-start; /* Alinhar os checkboxes ao topo */
-  }
-  
-  /* Estilo para o botão de enviar */
+
   .submit-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #5dade2;
-    border: none;
-    border-radius: 5px;
-    color: #ffffff;
-    cursor: pointer;
+    font-size: 14px; /* Reduz o tamanho da fonte do botão */
+    padding: 8px 15px; /* Ajusta o padding do botão */
   }
-  
-  /* Estilo para o hover do botão de enviar */
-  .submit-button:hover {
-    background-color: #2e86c1; /* Cor do botão ao passar o mouse */
+
+  .table th, .table td {
+    padding: 8px; /* Reduz o padding das células da tabela */
   }
-  
-  /* Estilo para a tabela */
-  .table {
-    width: 100%; /* Largura total */
-    border-collapse: collapse; /* Colapsar as bordas da tabela */
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    max-width: 95%; /* Ajusta a largura máxima ainda mais para telas muito pequenas */
   }
-  
-  /* Estilo para células do cabeçalho */
-  .table th {
-    padding: 10px; /* Adicionar preenchimento interno */
-    border: 1px solid #ffffff; /* Cor da borda branca */
-    text-align: left; /* Alinhar o texto à esquerda */
-    font-weight: bold; /* Tornar o texto em negrito */
-    color: #ffffff;
+
+  .submit-button {
+    font-size: 12px; /* Reduz o tamanho da fonte do botão em telas muito pequenas */
+    padding: 6px 12px; /* Ajusta o padding do botão */
   }
-  
-  /* Estilo para células de dados */
-  .table td {
-    padding: 10px; /* Adicionar preenchimento interno */
-    border: 1px solid #ffffff; /* Cor da borda branca */
-    text-align: left; /* Alinhar o texto à esquerda */
-    width: auto; /* Largura automática */
-    color: #ffffff;
+
+  .table th, .table td {
+    padding: 6px; /* Reduz o padding das células da tabela em telas muito pequenas */
   }
-  
-  /* Estilo para o texto do título */
-  .text-titulo {
-    color: #ffffff;
-    text-align: center;
-  }
-  
+}

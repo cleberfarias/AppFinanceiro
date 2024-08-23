@@ -1,38 +1,65 @@
 /* Home.css */
 
 .home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f5f5f5;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+  padding: 1rem; /* Adiciona um pouco de padding nas laterais */
+}
+
+.home-title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.home-button {
+  width: 100%;
+  max-width: 300px; /* Limita a largura máxima dos botões */
+  height: 60px;
+  font-size: 1.25rem;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
   .home-title {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
+    font-size: 2rem; /* Reduz o tamanho da fonte para telas menores */
+    margin-bottom: 1.5rem;
   }
-  
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
+
   .home-button {
-    width: 200px;
-    height: 60px;
-    font-size: 1.25rem;
-    color: white;
-    background-color: #007bff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    height: 50px;
+    font-size: 1.125rem;
   }
-  
-  .home-button:hover {
-    background-color: #0056b3;
+}
+
+@media (max-width: 480px) {
+  .home-title {
+    font-size: 1.5rem; /* Reduz ainda mais o tamanho da fonte para telas muito pequenas */
+    margin-bottom: 1rem;
   }
-  
+
+  .home-button {
+    height: 45px;
+    font-size: 1rem;
+  }
+}
