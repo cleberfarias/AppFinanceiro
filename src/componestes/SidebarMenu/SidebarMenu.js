@@ -12,25 +12,25 @@ const SidebarMenu = () => {
           <li>
             <Link to="/Home" className="menu-item">
               <FaHome />
-              <span className="menu-text">Home</span>
+              <span className="menu-text"></span>
             </Link>
           </li>
           
           <li>
             <Link to="/meta" className="menu-item">
               <FaChartBar />
-              <span className="menu-text">Meta</span>
+              <span className="menu-text"></span>
             </Link>
           </li>
           <li>
             <Link to="/financeiro" className="menu-item">
               <FaWallet />
-              <span className="menu-text">Financeiro</span>
+              <span className="menu-text"></span>
             </Link>
             <li>
             <Link to="/login" className="menu-item">
               <FaUser />
-              <span className="menu-text">Login</span>
+              <span className="menu-text"></span>
             </Link>
           </li>
           </li>

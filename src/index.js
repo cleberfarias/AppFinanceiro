@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       {!hideSidebar && <SidebarMenu />}
-      <div style={{ flex: 1, marginLeft: hideSidebar ? 0 : '90px', transition: 'margin-left 0.3s' }}>
+      <div style={{ flex: 1, marginLeft: hideSidebar ? 0 : '70px', transition: 'margin-left 0.3s' }}>
         {children}
       </div>
     </div>

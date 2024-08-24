@@ -1,96 +1,52 @@
-/* SidebarMenu.css */
-
 .sidebar-menu {
-  width: 110px; /* Largura do menu expandido */
+  width: 5px; /* Define a largura do menu baseada no tamanho dos ícones */
+  background-color: var(--background);
   height: 100vh;
-  background-color: #333;
-  color: white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 20px;
-  box-sizing: border-box;
-  transition: width 0.3s;
-  overflow: hidden; /* Esconde o conteúdo fora da área visível */
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
 
-.sidebar-menu.collapsed {
-  width: 60px; /* Largura quando recolhido */
-}
-
-.sidebar-menu .menu-content {
-  display: block;
-  transition: opacity 0.3s, transform 0.3s;
-}
-
-.sidebar-menu.collapsed .menu-content {
-  opacity: 0; /* Esconde o conteúdo quando recolhido */
-  pointer-events: none; /* Desativa a interação com o conteúdo escondido */
-  transform: scale(0.8); /* Diminui o conteúdo quando recolhido */
-}
-
-.sidebar-menu .menu-content ul {
+.menu-content ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  width: 90%;
 }
 
-.sidebar-menu .menu-content ul li {
-  margin: 15px 0;
-}
-
-.sidebar-menu .menu-content ul li a {
-  color: white;
-  text-decoration: none;
+.menu-item {
   display: flex;
+  justify-content: center;
   align-items: center;
-  padding: 10px;
-  border-radius: 4px;
-  transition: background-color 0.3s, color 0.3s;
+  padding: 1rem 0;
+  color: var(--foreground);
+  text-decoration: none;
+  transition: transform 0.3s ease; /* Adiciona transição suave */
 }
 
-.sidebar-menu .menu-content ul li a:hover {
-  background-color: #575757;
-  color: #e2e2e2;
+.menu-item svg {
+  font-size: 18px; /* Define o tamanho dos ícones */
+  transition: transform 0.3s ease; /* Transição suave para o ícone */
 }
 
-.toggle-button {
-  background-color: #333;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  padding: 10px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  transition: background-color 0.3s;
+.menu-item:hover svg {
+  transform: scale(1.5); /* Aumenta o ícone em 1.5x ao passar o mouse */
 }
 
-.toggle-button:hover {
-  background-color: #555;
+.menu-text {
+  display: none; /* Esconde o texto */
 }
 
-.content-container {
-  margin-left: 100px; /* Inicialmente o menu está expandido */
-  padding: 20px;
-  width: calc(100% - 200px);
-  transition: margin-left 0.3s, width 0.3s;
+/* Estilos adicionais */
+.sidebar-menu .menu-content ul li a i {
+  font-size: 18px; /* Define o tamanho do ícone */
+  margin-right: 0; /* Remove o espaço entre ícone e texto */
 }
 
-.sidebar-menu.collapsed + .content-container {
-  margin-left: 60px; /* Ajuste a largura quando o menu está recolhido */
-  width: calc(100% - 60px); /* Ajusta a largura do conteúdo quando o menu está recolhido */
+.sidebar-menu.collapsed .menu-content ul li a {
+  justify-content: center; /* Centraliza o ícone quando o menu está recolhido */
 }
 
-/* Responsivo */
-@media (max-width: 768px) {
-  .sidebar-menu {
-    display: none; /* Oculta a sidebar em telas pequenas */
-  }
-
-  .content-container {
-    margin-left: 0;
-    width: 100%;
-  }
+.sidebar-menu.collapsed .menu-content ul li a span {
+  display: none; /* Esconde o texto ao recolher */
 }

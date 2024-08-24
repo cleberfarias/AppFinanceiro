@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Importe o hook useNavigate
 import IconButton from '@mui/material/IconButton'; // Importa o componente IconButton
-import NavigateNextIcon from '@mui/icons-material/NavigateNext'; // Importa o ícone NavigateNext
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'; // Importa o ícone AttachMoney
+import TrendingUpIcon from '@mui/icons-material/TrendingUp'; // Importa o ícone TrendingUp
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance'; // Importa o ícone AccountBalance
 import './Home.css';
 
 const Home = () => {
@@ -20,11 +20,19 @@ const Home = () => {
     <div className="home-container">
       <h1 className="home-title">Bem-vindo ao Sistema de Controle</h1>
       <div className="icon-container">
-        <IconButton color="primary" onClick={goToMeta}>
-          <NavigateNextIcon fontSize="large" />
+        <IconButton 
+          color="primary" 
+          onClick={goToMeta} 
+          className="icon-button"
+        >
+          <TrendingUpIcon fontSize="large" />
         </IconButton>
-        <IconButton color="secondary" onClick={goToFinanceiro}>
-          <AttachMoneyIcon fontSize="large" />
+        <IconButton 
+          color="secondary" 
+          onClick={goToFinanceiro} 
+          className="icon-button"
+        >
+          <AccountBalanceIcon fontSize="large" />
         </IconButton>
       </div>
     </div>

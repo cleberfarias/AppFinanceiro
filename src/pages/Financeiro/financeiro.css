@@ -164,17 +164,6 @@ button.bg-blue-500 {
   background-color: var(--primary);
 }
 
-button.bg-red-500 {
-  background-color: #f56565;
-}
-
-button.bg-blue-500:hover {
-  background-color: darken(var(--primary), 10%);
-}
-
-button.bg-red-500:hover {
-  background-color: #e53e3e;
-}
 
 /* Responsive Styles */
 @media (max-width: 1200px) {

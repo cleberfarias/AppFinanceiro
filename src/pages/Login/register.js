@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { auth } from '../../firebaseConfig'; // Certifique-se de que o caminho está correto
 import { createUserWithEmailAndPassword } from 'firebase/auth'; // Função correta para registro
+import { useNavigate } from 'react-router-dom'; // Importa o hook useNavigate para redirecionamento
 //import './Register.css'; // Importe o CSS para a página de registro
 
 const Register = () => {
@@ -8,6 +9,8 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  
+  const navigate = useNavigate(); // Instancia o hook useNavigate
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -16,6 +19,12 @@ const Register = () => {
       await createUserWithEmailAndPassword(auth, email, password);
       setSuccess('Usuário registrado com sucesso!');
       setError('');
+
+      // Redireciona para a página de login após 2 segundos
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+
     } catch (error) {
       setError('Erro ao registrar o usuário: ' + error.message);
       setSuccess('');
