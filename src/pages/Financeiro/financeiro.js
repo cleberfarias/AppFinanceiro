@@ -83,18 +83,18 @@ const Financeiro = () => {
       setNewPayment({ accountName: '', amount: '', date: '' });
     }
   };
-
   const updateFixedAccounts = () => {
     const paymentMap = payments.reduce((acc, payment) => {
       if (!acc[payment.accountName]) acc[payment.accountName] = 0;
       acc[payment.accountName] += payment.amount;
       return acc;
     }, {});
-
+  
     setFixedAccounts((prevAccounts) => prevAccounts.map((account) => {
+      const totalValue = account.value * account.installments;
       const totalPaid = paymentMap[account.name] || 0;
-      const remaining = (account.value / account.installments) - totalPaid;
-
+      const remaining = totalValue - totalPaid;
+  
       return {
         ...account,
         totalPaid: totalPaid,
@@ -102,6 +102,7 @@ const Financeiro = () => {
       };
     }));
   };
+  
 
   const deleteFixedAccount = (name) => {
     setFixedAccounts((prev) => {

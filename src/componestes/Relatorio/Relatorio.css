@@ -113,17 +113,4 @@ body {
   }
 }
 
-@media (max-width: 480px) {
-  .form-container {
-    max-width: 95%; /* Ajusta a largura máxima ainda mais para telas muito pequenas */
-  }
 
-  .submit-button {
-    font-size: 12px; /* Reduz o tamanho da fonte do botão em telas muito pequenas */
-    padding: 6px 12px; /* Ajusta o padding do botão */
-  }
-
-  .table th, .table td {
-    padding: 6px; /* Reduz o padding das células da tabela em telas muito pequenas */
-  }
-}
