@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db, collection, addDoc, getDocs, deleteDoc, doc } from '../../firebaseConfig';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { Timestamp } from 'firebase/firestore';
 import './financeiro.css';
 
 const Financeiro = () => {
@@ -15,30 +16,28 @@ const Financeiro = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const fixedAccountsSnapshot = await getDocs(collection(db, 'fixedAccounts'));
-      const paymentsSnapshot = await getDocs(collection(db, 'payments'));
-      const fetchedFixedAccounts = fixedAccountsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      const fetchedPayments = paymentsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setFixedAccounts(fetchedFixedAccounts);
-      setPayments(fetchedPayments);
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-      } else {
-        // Redirecionar ou mostrar mensagem se o usuário não estiver logado
-      }
+      setUser(currentUser);
     });
 
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      const fetchData = async () => {
+        const fixedAccountsSnapshot = await getDocs(collection(db, `users/${user.uid}/fixedAccounts`));
+        const paymentsSnapshot = await getDocs(collection(db, `users/${user.uid}/payments`));
+        const fetchedFixedAccounts = fixedAccountsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const fetchedPayments = paymentsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setFixedAccounts(fetchedFixedAccounts);
+        setPayments(fetchedPayments);
+      };
+
+      fetchData();
+    }
+  }, [user]);
 
   const handleFixedChange = (e) => {
     const { name, value } = e.target;
@@ -55,48 +54,55 @@ const Financeiro = () => {
   const handleBenefitsChange = (e) => setBenefits(e.target.value);
 
   const addFixedAccount = async () => {
-    if (newFixedAccount.name && newFixedAccount.value && newFixedAccount.installments) {
+    if (user && newFixedAccount.name && newFixedAccount.value && newFixedAccount.installments) {
       const accountData = {
         ...newFixedAccount,
         value: parseFloat(newFixedAccount.value),
         installments: parseInt(newFixedAccount.installments, 10),
         totalPaid: 0,
         remaining: parseFloat(newFixedAccount.value),
+        uid: user.uid,
       };
-      const docRef = await addDoc(collection(db, 'fixedAccounts'), accountData);
+      const docRef = await addDoc(collection(db, `users/${user.uid}/fixedAccounts`), accountData);
       setFixedAccounts((prev) => [...prev, { id: docRef.id, ...accountData }]);
       setNewFixedAccount({ name: '', value: '', installments: '' });
     }
   };
 
   const addPayment = async () => {
-    if (newPayment.accountId && newPayment.amount && newPayment.date) {
+    if (user && newPayment.accountId && newPayment.amount && newPayment.date) {
       const paymentData = {
         ...newPayment,
         amount: parseFloat(newPayment.amount),
-        accountName: fixedAccounts.find(account => account.id === newPayment.accountId)?.name || 'Desconhecida'
+        date: new Date(newPayment.date), // Use JavaScript Date object
+        accountName: fixedAccounts.find(account => account.id === newPayment.accountId)?.name || 'Desconhecida',
+        uid: user.uid,
       };
-      const docRef = await addDoc(collection(db, 'payments'), paymentData);
+      const docRef = await addDoc(collection(db, `users/${user.uid}/payments`), paymentData);
       setPayments((prev) => [...prev, { id: docRef.id, ...paymentData }]);
       setNewPayment({ accountId: '', amount: '', date: '' });
     }
   };
 
   const deleteFixedAccount = async (id) => {
-    await deleteDoc(doc(db, 'fixedAccounts', id));
-    setFixedAccounts((prev) => prev.filter(account => account.id !== id));
+    if (user) {
+      await deleteDoc(doc(db, `users/${user.uid}/fixedAccounts`, id));
+      setFixedAccounts((prev) => prev.filter(account => account.id !== id));
 
-    // Também deletar os pagamentos relacionados a essa conta fixa
-    const relatedPayments = payments.filter(payment => payment.accountId === id);
-    for (const payment of relatedPayments) {
-      await deleteDoc(doc(db, 'payments', payment.id));
+      // Também deletar os pagamentos relacionados a essa conta fixa
+      const relatedPayments = payments.filter(payment => payment.accountId === id);
+      for (const payment of relatedPayments) {
+        await deleteDoc(doc(db, `users/${user.uid}/payments`, payment.id));
+      }
+      setPayments(prev => prev.filter(payment => payment.accountId !== id));
     }
-    setPayments(prev => prev.filter(payment => payment.accountId !== id));
   };
 
   const deletePayment = async (id) => {
-    await deleteDoc(doc(db, 'payments', id));
-    setPayments((prev) => prev.filter(payment => payment.id !== id));
+    if (user) {
+      await deleteDoc(doc(db, `users/${user.uid}/payments`, id));
+      setPayments((prev) => prev.filter(payment => payment.id !== id));
+    }
   };
 
   const totalIncome = parseFloat(salary || '0') + parseFloat(commission || '0') + parseFloat(benefits || '0');
@@ -167,13 +173,13 @@ const Financeiro = () => {
               </tr>
             </thead>
             <tbody>
-              {fixedAccounts.map((account, index) => (
-                <tr key={index}>
+              {fixedAccounts.map((account) => (
+                <tr key={account.id}>
                   <td className="border-b p-2">{account.name}</td>
                   <td className="border-b p-2">R$ {account.value.toFixed(2)}</td>
                   <td className="border-b p-2">{account.installments}</td>
                   <td className="border-b p-2">R$ {account.totalPaid ? account.totalPaid.toFixed(2) : '0.00'}</td>
-                  <td className="border-b p-2">R$ {account.remaining.toFixed(2)}</td>
+                  <td className="border-b p-2">R$ {account.remaining ? account.remaining.toFixed(2) : '0.00'}</td>
                   <td className="border-b p-2">
                     <button onClick={() => deleteFixedAccount(account.id)} className="bg-red-500 text-white p-1 rounded">🗑️</button>
                   </td>
@@ -206,12 +212,7 @@ const Financeiro = () => {
               placeholder="Parcelas"
               className="w-full p-2 border border-muted rounded mt-2"
             />
-            <button
-              onClick={addFixedAccount}
-              className="mt-2 bg-blue-500 text-white p-2 rounded w-full"
-            >
-              Adicionar Conta Fixa
-            </button>
+            <button onClick={addFixedAccount} className="bg-primary text-white p-2 rounded mt-2 w-full">Adicionar Conta Fixa</button>
           </div>
         </div>
 
@@ -227,8 +228,8 @@ const Financeiro = () => {
               </tr>
             </thead>
             <tbody>
-              {payments.map((payment, index) => (
-                <tr key={index}>
+              {payments.map((payment) => (
+                <tr key={payment.id}>
                   <td className="border-b p-2">{payment.accountName}</td>
                   <td className="border-b p-2">R$ {payment.amount.toFixed(2)}</td>
                   <td className="border-b p-2">{new Date(payment.date).toLocaleDateString()}</td>
@@ -246,8 +247,8 @@ const Financeiro = () => {
               onChange={handlePaymentChange}
               className="w-full p-2 border border-muted rounded"
             >
-              <option value="">Selecione uma Conta</option>
-              {fixedAccounts.map(account => (
+              <option value="">Selecione a Conta</option>
+              {fixedAccounts.map((account) => (
                 <option key={account.id} value={account.id}>{account.name}</option>
               ))}
             </select>
@@ -256,7 +257,7 @@ const Financeiro = () => {
               name="amount"
               value={newPayment.amount}
               onChange={handlePaymentChange}
-              placeholder="Valor do Pagamento"
+              placeholder="Valor"
               className="w-full p-2 border border-muted rounded mt-2"
             />
             <input
@@ -264,15 +265,10 @@ const Financeiro = () => {
               name="date"
               value={newPayment.date}
               onChange={handlePaymentChange}
-              placeholder="Data do Pagamento"
+              placeholder="Data"
               className="w-full p-2 border border-muted rounded mt-2"
             />
-            <button
-              onClick={addPayment}
-              className="mt-2 bg-blue-500 text-white p-2 rounded w-full"
-            >
-              Adicionar Pagamento
-            </button>
+            <button onClick={addPayment} className="bg-primary text-white p-2 rounded mt-2 w-full">Adicionar Pagamento</button>
           </div>
         </div>
       </div>
