@@ -1,244 +1,251 @@
 import React, { useState } from 'react';
-import './meta.css';
-import SidebarMenu from '../../componestes/SidebarMenu/SidebarMenu'; // Importe o SidebarMenu
+import './meta.css'; // Importa o CSS para estilização
 
-function Meta() {
+const Meta = () => {
+  // Estado para alternar entre formulários
+  const [formType, setFormType] = useState('relatorio');
+
+  // Estado para o formulário de Relatórios
+  const [empresaRelatorio, setEmpresaRelatorio] = useState('');
+  const [dataRelatorio, setDataRelatorio] = useState('');
+  const [tipoRelatorio, setTipoRelatorio] = useState('');
+  const [venda, setVenda] = useState(0);
+  const [reuniao, setReuniao] = useState(0);
+  const [pontos, setPontos] = useState(0);
   const [relatorios, setRelatorios] = useState([]);
-  const [inputSalario, setInputSalario] = useState(0);
 
-  const handleFormSubmit = ({ empresa, data, tipo, venda, reuniao, inputSalario }) => {
-    const novoRelatorio = {
-      empresa: empresa,
-      data: data,
-      tipo: tipo,
-      venda: venda ? 'Sim' : '',
-      reuniao: reuniao ? 'Sim' : '',
-      pontos: calcularPontos(tipo, venda, reuniao),
-    };
-    setRelatorios([...relatorios, novoRelatorio]);
-    setInputSalario(parseFloat(inputSalario));
+  // Estado para o formulário de Agendamentos
+  const [empresa, setEmpresa] = useState('');
+  const [data, setData] = useState('');
+  const [agendamentos, setAgendamentos] = useState(0);
+  const [meta, setMeta] = useState(0); // Novo estado para meta
+  const [metaAlcancada, setMetaAlcancada] = useState(false);
+  const [agendamentoConcluido, setAgendamentoConcluido] = useState(false);
+  const [agendamentosList, setAgendamentosList] = useState([]);
+
+  // Função para alternar entre formulários
+  const toggleForm = () => {
+    setFormType(formType === 'relatorio' ? 'agendamentos' : 'relatorio');
   };
 
-  function calcularPontos(tipo, venda, reuniao) {
-    let pontos = 0;
-    if (venda) {
-      switch (tipo) {
-        case 'GOOGLE ADS':
-        case 'FALECONOSCO':
-        case 'TELEFONE':
-        case 'INDICAÇÕES':
-          pontos = 5;
-          break;
-        case 'EBOOK':
-        case 'WEBINAR':
-        case 'EVENTO':
-        case 'BASE':
-          pontos = 20;
-          break;
-        case 'OUTBOUND':
-          pontos = 17;
-          break;
-        default:
-          pontos = 0;
-      }
-    }
-    if (reuniao) {
-      switch (tipo) {
-        case 'GOOGLE ADS':
-        case 'FALECONOSCO':
-        case 'TELEFONE':
-        case 'INDICAÇÕES':
-          pontos += 0.5;
-          break;
-        case 'EBOOK':
-        case 'WEBINAR':
-        case 'EVENTO':
-        case 'BASE':
-          pontos += 1;
-          break;
-        case 'OUTBOUND':
-          pontos += 1.75;
-          break;
-        default:
-          pontos += 0;
-      }
-    }
-    return pontos;
-  }
+  // Função para adicionar relatório
+  const adicionarRelatorio = () => {
+    setRelatorios([...relatorios, {
+      empresa: empresaRelatorio,
+      data: dataRelatorio,
+      tipo: tipoRelatorio,
+      venda,
+      reuniao,
+      pontos
+    }]);
+    // Limpar campos após adicionar
+    setEmpresaRelatorio('');
+    setDataRelatorio('');
+    setTipoRelatorio('');
+    setVenda(0);
+    setReuniao(0);
+    setPontos(0);
+  };
 
-  function Formulario({ onFormSubmit }) {
-    const [empresa, setEmpresa] = useState('');
-    const [data, setData] = useState('');
-    const [tipo, setTipo] = useState('');
-    const [venda, setVenda] = useState(false);
-    const [reuniao, setReuniao] = useState(false);
-    const [inputSalario, setInputSalario] = useState('');
+  // Função para adicionar agendamento
+  const adicionarAgendamento = () => {
+    setAgendamentosList([...agendamentosList, {
+      empresa,
+      data,
+      agendamentos,
+      meta,
+      metaAlcancada,
+      agendamentoConcluido
+    }]);
+    // Limpar campos após adicionar
+    setEmpresa('');
+    setData('');
+    setAgendamentos(0);
+    setMeta(0); // Limpar campo de meta
+    setMetaAlcancada(false);
+    setAgendamentoConcluido(false);
+  };
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      if (empresa && data && tipo && inputSalario) {
-        onFormSubmit({ empresa, data, tipo, venda, reuniao, inputSalario });
-        setEmpresa('');
-        setData('');
-        setTipo('');
-        setVenda(false);
-        setReuniao(false);
-        setInputSalario('');
-      } else {
-        alert('Por favor, preencha todos os campos.');
-      }
-    };
+  // Componente do Formulário de Relatório
+  const RelatorioForm = () => (
+    <>
+      <label className='texto-form'>Cadastrar Empresa</label>
+      <input
+        type="text"
+        placeholder="Empresa"
+        value={empresaRelatorio}
+        onChange={(e) => setEmpresaRelatorio(e.target.value)}
+        className="input-field"
+      />
+      <label className='texto-form'>Data</label>
+      <input
+        type="date"
+        value={dataRelatorio}
+        onChange={(e) => setDataRelatorio(e.target.value)}
+        className="input-field"
+      />
+      <label className='texto-form'>Tipo</label>
+      <input
+        type="text"
+        placeholder="Tipo"
+        value={tipoRelatorio}
+        onChange={(e) => setTipoRelatorio(e.target.value)}
+        className="input-field"
+      />
+      <label className='texto-form'>Venda</label>
+      <input
+        type="number"
+        placeholder="Venda"
+        value={venda}
+        onChange={(e) => setVenda(Number(e.target.value))}
+        className="input-field"
+      />
+      <label className='texto-form'>Reunião</label>
+      <input
+        type="number"
+        placeholder="Reunião"
+        value={reuniao}
+        onChange={(e) => setReuniao(Number(e.target.value))}
+        className="input-field"
+      />
+      <label className='texto-form'>Pontos</label>
+      <input
+        type="number"
+        placeholder="Pontos"
+        value={pontos}
+        onChange={(e) => setPontos(Number(e.target.value))}
+        className="input-field"
+      />
+    </>
+  );
 
-    const handleClear = () => {
-      setEmpresa('');
-      setData('');
-      setTipo('');
-      setVenda(false);
-      setReuniao(false);
-      setInputSalario('');
-    };
+  // Componente do Formulário de Agendamentos
+  const AgendamentosForm = () => (
+    <>
+      <label className='texto-form'>Cadastrar Empresa</label>
+      <input
+        type="text"
+        placeholder="Empresa"
+        value={empresa}
+        onChange={(e) => setEmpresa(e.target.value)}
+        className="input-field"
+      />
+      <label className='texto-form'>Data</label>
+      <input
+        type="date"
+        value={data}
+        onChange={(e) => setData(e.target.value)}
+        className="input-field"
+      />
+      <label className='texto-form'>Número de Agendamentos</label>
+      <input
+        type="number"
+        placeholder="Número de Agendamentos"
+        value={agendamentos}
+        onChange={(e) => setAgendamentos(Number(e.target.value))}
+        className="input-field"
+      />
+      <label className='texto-form'>Meta</label>
+      <input
+        type="number"
+        placeholder="Meta"
+        value={meta}
+        onChange={(e) => setMeta(Number(e.target.value))}
+        className="input-field"
+      />
+      <label className='label'>
+        Meta Alcançada:
+        <input type="checkbox" checked={metaAlcancada} onChange={(e) => setMetaAlcancada(e.target.checked)} className="checkbox" />
+      </label>
+      <label className='label'>
+        Agendamento Concluído:
+        <input type="checkbox" checked={agendamentoConcluido} onChange={(e) => setAgendamentoConcluido(e.target.checked)} className="checkbox" />
+      </label>
+    </>
+  );
 
-    return (
-      <form onSubmit={handleSubmit} className="form-container">
-        <h2 className='texto-form'>Relatório de Pré-Vendas</h2>
-        <label className='texto-form'>Informe seu Salário</label>
-        <input
-          type="text"
-          placeholder="Salário"
-          value={inputSalario}
-          onChange={(e) => setInputSalario(e.target.value)}
-          className="input-field"
-        />
-        <label className='texto-form'>Cadastrar Empresa</label>
-        <input
-          type="text"
-          placeholder="Empresa"
-          value={empresa}
-          onChange={(e) => setEmpresa(e.target.value)}
-          className="input-field"
-        />
-        <label className='texto-form'>Mês e Ano</label>
-        <input
-          type="text"
-          placeholder="MM/AAAA"
-          value={data}
-          onChange={(e) => setData(e.target.value)}
-          className="input-field"
-        />
-        <label className='texto-form'>Origem do Lead</label>
-        <select value={tipo} onChange={(e) => setTipo(e.target.value)} className="input-field">
-          <option value="">Selecione o tipo</option>
-          <option value="GOOGLE ADS">GOOGLE ADS</option>
-          <option value="FALECONOSCO">FALECONOSCO</option>
-          <option value="TELEFONE">TELEFONE</option>
-          <option value="INDICAÇÕES">INDICAÇÕES</option>
-          <option value="EBOOK">EBOOK</option>
-          <option value="WEBINAR">WEBINAR</option>
-          <option value="EVENTO">EVENTO</option>
-          <option value="BASE">BASE</option>
-          <option value="OUTBOUND">OUTBOUND</option>
-        </select>
-        <label className="label">
-          Venda:
-          <input type="checkbox" checked={venda} onChange={(e) => setVenda(e.target.checked)} className="checkbox" />
-        </label>
-        <label className="label">
-          Reunião:
-          <input type="checkbox" checked={reuniao} onChange={(e) => setReuniao(e.target.checked)} className="checkbox" />
-        </label>
-        <div className="button-container">
-          <button type="submit" className="submit-button">Cadastrar</button>
-          <button type="button" onClick={handleClear} className="submit-button">Limpar</button>
-        </div>
-      </form>
-    );
-  }
+  // Componente da Tabela de Relatórios
+  const RelatoriosTable = () => (
+    <table className="table">
+      <thead>
+        <tr>
+          <th>Empresa</th>
+          <th>Data</th>
+          <th>Tipo</th>
+          <th>Venda</th>
+          <th>Reunião</th>
+          <th>Pontos</th>
+        </tr>
+      </thead>
+      <tbody>
+        {relatorios.map((relatorio, index) => (
+          <tr key={index}>
+            <td>{relatorio.empresa}</td>
+            <td>{relatorio.data}</td>
+            <td>{relatorio.tipo}</td>
+            <td>{relatorio.venda}</td>
+            <td>{relatorio.reuniao}</td>
+            <td>{relatorio.pontos}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 
-  function Relatorios({ relatorios }) {
-    return (
-      <div className="relatorios-container">
-        <h2 className='text-titulo'>Relatórios</h2>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Empresa</th>
-              <th>Data</th>
-              <th>Tipo</th>
-              <th>Venda</th>
-              <th>Reunião</th>
-              <th>Pontos</th>
-            </tr>
-          </thead>
-          <tbody>
-            {relatorios.map((relatorio, index) => (
-              <tr key={index}>
-                <td>{relatorio.empresa}</td>
-                <td>{relatorio.data}</td>
-                <td>{relatorio.tipo}</td>
-                <td>{relatorio.venda}</td>
-                <td>{relatorio.reuniao}</td>
-                <td>{relatorio.pontos}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
-
-  function InformacoesAdicionais({ relatorios, inputSalario }) {
-    const totalPontos = relatorios.reduce((acc, curr) => acc + curr.pontos, 0);
-    const totalComissao = calcularComissao(totalPontos);
-    const totalBonus = calcularBonus(totalPontos);
-    const totalSalarioComissaoEBonus = inputSalario + totalComissao + totalBonus;
-
-    function calcularComissao(pontos) {
-      let porcentagem = 0;
-      if (pontos >= 9.5 && pontos <= 19.5) {
-        porcentagem = 0.2;
-      } else if (pontos >= 20 && pontos <= 38) {
-        porcentagem = 0.5;
-      } else if (pontos >= 38.5 && pontos <= 69) {
-        porcentagem = 0.7;
-      } else if (pontos >= 69.5) {
-        porcentagem = 1;
-      }
-      return porcentagem * inputSalario;
-    }
-
-    function calcularBonus(pontos) {
-      let bonus = 0;
-      if (pontos >= 90) {
-        bonus = 1500;
-      } else if (pontos >= 80) {
-        bonus = 1000;
-      } else if (pontos >= 70) {
-        bonus = 500;
-      }
-      return bonus;
-    }
-
-    return (
-      <div className="informacoes-container">
-        <p>Total de pontos: {totalPontos}</p>
-        <p>Salário: R$ {inputSalario.toFixed(2)}</p>
-        <p>Comissão: R$ {totalComissao.toFixed(2)}</p>
-        <p>Bônus: R$ {totalBonus.toFixed(2)}</p>
-        <p>Total de Salário, Comissão e Bônus: R$ {totalSalarioComissaoEBonus.toFixed(2)}</p>
-      </div>
-    );
-  }
+  // Componente da Tabela de Agendamentos
+  const AgendamentosTable = () => (
+    <table className="table">
+      <thead>
+        <tr>
+          <th>Empresa</th>
+          <th>Data</th>
+          <th>Agendamentos</th>
+          <th>Meta</th>
+          <th>Meta Alcançada</th>
+          <th>Agendamento Concluído</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {agendamentosList.map((agendamento, index) => (
+          <tr key={index}>
+            <td>{agendamento.empresa}</td>
+            <td>{agendamento.data}</td>
+            <td>{agendamento.agendamentos}</td>
+            <td>{agendamento.meta}</td>
+            <td>{agendamento.metaAlcancada ? 'Sim' : 'Não'}</td>
+            <td>{agendamento.agendamentoConcluido ? 'Sim' : 'Não'}</td>
+            <td>
+              {agendamento.agendamentos * (agendamento.metaAlcancada ? 2 : 1) * 10}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 
   return (
-    <div className="meta-page">
-      
-      <div className="meta-container">
-        <Formulario onFormSubmit={handleFormSubmit} />
-        <Relatorios relatorios={relatorios} />
-        <InformacoesAdicionais relatorios={relatorios} inputSalario={inputSalario} />
-      </div>
+    <div className="meta-container">
+      <button onClick={toggleForm} className="toggle-button">
+        Alternar Formulário
+      </button>
+
+      {/* Renderiza o formulário atual baseado no estado */}
+      {formType === 'relatorio' ? (
+        <>
+          <RelatorioForm />
+          <button onClick={adicionarRelatorio} className="submit-button">Adicionar Relatório</button>
+          <RelatoriosTable />
+        </>
+      ) : (
+        <>
+          <AgendamentosForm />
+          <button onClick={adicionarAgendamento} className="submit-button">Adicionar Agendamento</button>
+          <AgendamentosTable />
+        </>
+      )}
     </div>
   );
-}
+};
 
 export default Meta;
