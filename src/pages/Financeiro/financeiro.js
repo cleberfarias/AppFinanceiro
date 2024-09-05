@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { db, collection, addDoc, getDocs, deleteDoc, doc } from '../../firebaseConfig';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import './financeiro.css';
 
 const Financeiro = () => {
   const [fixedAccounts, setFixedAccounts] = useState([]);
   const [newFixedAccount, setNewFixedAccount] = useState({ name: '', value: '', installments: '' });
   const [payments, setPayments] = useState([]);
-  const [newPayment, setNewPayment] = useState({ accountName: '', amount: '', date: '' });
+  const [newPayment, setNewPayment] = useState({ accountId: '', amount: '', date: '' });
 
   const [salary, setSalary] = useState('');
   const [commission, setCommission] = useState('');
   const [benefits, setBenefits] = useState('');
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +25,19 @@ const Financeiro = () => {
     };
 
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        // Redirecionar ou mostrar mensagem se o usuário não estiver logado
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const handleFixedChange = (e) => {
@@ -55,21 +70,28 @@ const Financeiro = () => {
   };
 
   const addPayment = async () => {
-    if (newPayment.accountName && newPayment.amount && newPayment.date) {
+    if (newPayment.accountId && newPayment.amount && newPayment.date) {
       const paymentData = {
         ...newPayment,
         amount: parseFloat(newPayment.amount),
+        accountName: fixedAccounts.find(account => account.id === newPayment.accountId)?.name || 'Desconhecida'
       };
       const docRef = await addDoc(collection(db, 'payments'), paymentData);
       setPayments((prev) => [...prev, { id: docRef.id, ...paymentData }]);
-      setNewPayment({ accountName: '', amount: '', date: '' });
+      setNewPayment({ accountId: '', amount: '', date: '' });
     }
   };
 
   const deleteFixedAccount = async (id) => {
     await deleteDoc(doc(db, 'fixedAccounts', id));
     setFixedAccounts((prev) => prev.filter(account => account.id !== id));
-    setPayments(prev => prev.filter(payment => payment.accountName !== id));
+
+    // Também deletar os pagamentos relacionados a essa conta fixa
+    const relatedPayments = payments.filter(payment => payment.accountId === id);
+    for (const payment of relatedPayments) {
+      await deleteDoc(doc(db, 'payments', payment.id));
+    }
+    setPayments(prev => prev.filter(payment => payment.accountId !== id));
   };
 
   const deletePayment = async (id) => {
@@ -157,44 +179,40 @@ const Financeiro = () => {
                   </td>
                 </tr>
               ))}
-              <tr>
-                <td className="border-b p-2">
-                  <input
-                    type="text"
-                    name="name"
-                    value={newFixedAccount.name}
-                    onChange={handleFixedChange}
-                    placeholder="Nome da Conta"
-                    className="w-full p-1 border border-muted rounded"
-                  />
-                </td>
-                <td className="border-b p-2">
-                  <input
-                    type="number"
-                    name="value"
-                    value={newFixedAccount.value}
-                    onChange={handleFixedChange}
-                    placeholder="Valor"
-                    className="w-full p-1 border border-muted rounded"
-                  />
-                </td>
-                <td className="border-b p-2">
-                  <input
-                    type="number"
-                    name="installments"
-                    value={newFixedAccount.installments}
-                    onChange={handleFixedChange}
-                    placeholder="Parcelas"
-                    className="w-full p-1 border border-muted rounded"
-                  />
-                </td>
-                <td colSpan={2}></td>
-                <td className="border-b p-2">
-                  <button onClick={addFixedAccount} className="bg-blue-500 text-white p-1 rounded">Adicionar</button>
-                </td>
-              </tr>
             </tbody>
           </table>
+          <div className="mt-4">
+            <input
+              type="text"
+              name="name"
+              value={newFixedAccount.name}
+              onChange={handleFixedChange}
+              placeholder="Nome da Conta"
+              className="w-full p-2 border border-muted rounded"
+            />
+            <input
+              type="number"
+              name="value"
+              value={newFixedAccount.value}
+              onChange={handleFixedChange}
+              placeholder="Valor Total"
+              className="w-full p-2 border border-muted rounded mt-2"
+            />
+            <input
+              type="number"
+              name="installments"
+              value={newFixedAccount.installments}
+              onChange={handleFixedChange}
+              placeholder="Parcelas"
+              className="w-full p-2 border border-muted rounded mt-2"
+            />
+            <button
+              onClick={addFixedAccount}
+              className="mt-2 bg-blue-500 text-white p-2 rounded w-full"
+            >
+              Adicionar Conta Fixa
+            </button>
+          </div>
         </div>
 
         <div className="bg-card p-4 rounded-lg shadow">
@@ -213,53 +231,49 @@ const Financeiro = () => {
                 <tr key={index}>
                   <td className="border-b p-2">{payment.accountName}</td>
                   <td className="border-b p-2">R$ {payment.amount.toFixed(2)}</td>
-                  <td className="border-b p-2">{payment.date}</td>
+                  <td className="border-b p-2">{new Date(payment.date).toLocaleDateString()}</td>
                   <td className="border-b p-2">
                     <button onClick={() => deletePayment(payment.id)} className="bg-red-500 text-white p-1 rounded">🗑️</button>
                   </td>
                 </tr>
               ))}
-              <tr>
-                <td className="border-b p-2">
-                  <select
-                    name="accountName"
-                    value={newPayment.accountName}
-                    onChange={handlePaymentChange}
-                    className="w-full p-1 border border-muted rounded"
-                  >
-                    <option value="">Selecione a Conta</option>
-                    {fixedAccounts.map((account, index) => (
-                      <option key={index} value={account.name}>
-                        {account.name}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td className="border-b p-2">
-                  <input
-                    type="number"
-                    name="amount"
-                    value={newPayment.amount}
-                    onChange={handlePaymentChange}
-                    placeholder="Valor"
-                    className="w-full p-1 border border-muted rounded"
-                  />
-                </td>
-                <td className="border-b p-2">
-                  <input
-                    type="date"
-                    name="date"
-                    value={newPayment.date}
-                    onChange={handlePaymentChange}
-                    className="w-full p-1 border border-muted rounded"
-                  />
-                </td>
-                <td className="border-b p-2">
-                  <button onClick={addPayment} className="bg-blue-500 text-white p-1 rounded">Adicionar</button>
-                </td>
-              </tr>
             </tbody>
           </table>
+          <div className="mt-4">
+            <select
+              name="accountId"
+              value={newPayment.accountId}
+              onChange={handlePaymentChange}
+              className="w-full p-2 border border-muted rounded"
+            >
+              <option value="">Selecione uma Conta</option>
+              {fixedAccounts.map(account => (
+                <option key={account.id} value={account.id}>{account.name}</option>
+              ))}
+            </select>
+            <input
+              type="number"
+              name="amount"
+              value={newPayment.amount}
+              onChange={handlePaymentChange}
+              placeholder="Valor do Pagamento"
+              className="w-full p-2 border border-muted rounded mt-2"
+            />
+            <input
+              type="date"
+              name="date"
+              value={newPayment.date}
+              onChange={handlePaymentChange}
+              placeholder="Data do Pagamento"
+              className="w-full p-2 border border-muted rounded mt-2"
+            />
+            <button
+              onClick={addPayment}
+              className="mt-2 bg-blue-500 text-white p-2 rounded w-full"
+            >
+              Adicionar Pagamento
+            </button>
+          </div>
         </div>
       </div>
     </div>
