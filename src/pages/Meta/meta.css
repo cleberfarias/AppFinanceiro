@@ -1,175 +1,145 @@
-/* Estilos principais */
-.App {
-  display: flex;
-  font-family: 'Arial', sans-serif;
-  background-color: #f5f5f5;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-}
+/* meta.css */
 
-.sidebar-menu {
-  width: 250px;
-  height: 100vh;
-  background-color: #333;
-  color: white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.content-container {
-  margin-left: 250px; /* Para deixar espaço para o menu */
-  padding: 20px;
-  width: calc(100% - 250px); /* Largura do conteúdo ajustada */
-}
-
+/* Container principal */
 .meta-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  width: 100%;
-  flex-wrap: wrap; /* Permite que os itens quebrem linha em telas menores */
-}
-
-.texto-form, .text-titulo {
-  font-weight: bold;
-  color: #63b3ed;
-  margin-bottom: 8px;
-}
-
-.form-container {
-  background-color: #ffffff;
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Cartões */
+.card {
+  background: #fff;
   border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  flex: 1;
-  min-width: 300px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
-.input-field {
-  width: 100%;
-  padding: 10px;
+/* Títulos dos cartões */
+.card-title {
+  font-size: 1.5rem;
   margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
 }
 
-.label {
+/* Formulário */
+.form-container {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+}
+
+/* Campos de entrada */
+.input-field {
   margin-bottom: 10px;
-  color: #63b3ed;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.checkbox {
-  margin-left: 10px;
-}
-
-.button-container {
-  display: flex;
-  justify-content: space-between;
-}
-
+/* Botões de envio */
 .submit-button {
-  background-color: #3182ce;
-  color: white;
-  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
   border: none;
+  padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s;
+  margin-right: 10px;
 }
 
+/* Hover dos botões */
 .submit-button:hover {
-  background-color: #3182ce;
+  background-color: #0056b3;
 }
 
-.relatorios-container {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  flex: 2;
-  overflow-x: auto;
+/* Container dos botões */
+.button-container {
+  margin-top: 10px;
 }
 
+/* Tabela */
 .table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 10px;
 }
 
+/* Células da tabela */
 .table th, .table td {
-  text-align: left;
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
+/* Cabeçalhos da tabela */
 .table th {
   background-color: #f2f2f2;
-  color: #63b3ed;
 }
 
-.table tr:nth-child(even) {
-  background-color: #f9f9f9;
+/* Botão de alternância */
+.toggle-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.informacoes-container {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  flex: 1;
-  min-width: 250px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+/* Hover do botão de alternância */
+.toggle-button:hover {
+  background-color: #218838;
 }
 
-.informacoes-container p {
-  margin: 8px 0;
-  color: #63b3ed;
-  font-weight: bold;
-}
-
-/* Estilos Responsivos */
-@media (max-width: 1024px) {
-  .content-container {
-    margin-left: 0; /* Remove a margem quando o menu lateral não está visível */
-    width: 100%; /* O conteúdo ocupa 100% da tela */
-  }
-  
-  .meta-container {
-    flex-direction: column; /* Coloca os itens um abaixo do outro */
-    align-items: center;
-    gap: 20px;
-  }
-
-  .form-container, .relatorios-container, .informacoes-container {
-    width: 100%; /* Garante que os containers ocupem 100% da largura disponível */
-    min-width: auto; /* Remove a largura mínima para permitir flexibilidade */
-  }
-
-  .button-container {
-    flex-direction: column;
-    gap: 10px;
-  }
-}
-
+/* Media Queries */
 @media (max-width: 768px) {
-  .form-container, .relatorios-container, .informacoes-container {
-    padding: 15px; /* Reduz o padding em telas menores */
+  .meta-container {
+    padding: 10px;
   }
 
-  .table th, .table td {
-    padding: 10px; /* Ajusta o padding para tamanhos menores */
+  .card {
+    padding: 15px;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+  }
+
+  .input-field {
+    padding: 8px;
   }
 
   .submit-button {
-    padding: 8px 16px; /* Ajusta o padding do botão */
+    padding: 8px 16px;
+  }
+
+  .toggle-button {
+    padding: 8px 16px;
+  }
+
+  .table th, .table td {
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-title {
+    font-size: 1.125rem;
+  }
+
+  .input-field {
+    padding: 6px;
+  }
+
+  .submit-button {
+    padding: 6px 12px;
+  }
+
+  .toggle-button {
+    padding: 6px 12px;
+  }
+
+  .table th, .table td {
+    padding: 4px;
+    font-size: 0.875rem;
   }
 }

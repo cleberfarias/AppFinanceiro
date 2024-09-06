@@ -1,17 +1,22 @@
+/* Estilo padrão - ícones em uma coluna vertical */
 .sidebar-menu {
-  width: 5px; /* Define a largura do menu baseada no tamanho dos ícones */
+  width: 60px; /* Ajuste para acomodar ícones */
   background-color: var(--background);
-  height: 100vh;
+  height: 100vh; /* Ocupa a altura total da tela */
   display: flex;
-  flex-direction: column;
-  align-items: start;
+  flex-direction: column; /* Coluna vertical */
+  align-items: center;
+  position: fixed; /* Fixa na lateral esquerda */
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
 .menu-content ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  width: 90%;
+  width: 100%;
 }
 
 .menu-item {
@@ -21,32 +26,54 @@
   padding: 1rem 0;
   color: var(--foreground);
   text-decoration: none;
-  transition: transform 0.3s ease; /* Adiciona transição suave */
+  transition: transform 0.3s ease;
 }
 
 .menu-item svg {
-  font-size: 18px; /* Define o tamanho dos ícones */
-  transition: transform 0.3s ease; /* Transição suave para o ícone */
+  font-size: 24px; /* Tamanho dos ícones */
+  transition: transform 0.3s ease;
 }
 
 .menu-item:hover svg {
-  transform: scale(1.5); /* Aumenta o ícone em 1.5x ao passar o mouse */
+  transform: scale(1.5); /* Aumenta o ícone ao passar o mouse */
 }
 
 .menu-text {
-  display: none; /* Esconde o texto */
+  display: none; /* Esconde o texto por padrão */
 }
 
-/* Estilos adicionais */
-.sidebar-menu .menu-content ul li a i {
-  font-size: 18px; /* Define o tamanho do ícone */
-  margin-right: 0; /* Remove o espaço entre ícone e texto */
-}
+/* Estilo para telas menores que 768px - ícones em linha horizontal no topo */
+@media (max-width: 768px) {
+  .sidebar-menu {
+    width: 100%; /* Ocupa a largura total da tela */
+    height: auto;
+    flex-direction: row; /* Alinha os ícones em uma linha horizontal */
+    justify-content: space-around; /* Distribui os ícones uniformemente */
+    align-items: center; /* Centraliza os ícones verticalmente */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--background); /* Cor de fundo */
+    z-index: 1000; /* Mantém o menu visível */
+  }
 
-.sidebar-menu.collapsed .menu-content ul li a {
-  justify-content: center; /* Centraliza o ícone quando o menu está recolhido */
-}
+  .menu-content ul {
+    display: flex; /* Alinha os ícones horizontalmente */
+    flex-direction: row; /* Muda o layout para horizontal */
+    justify-content: space-around; /* Distribui os itens igualmente */
+    width: 100%; /* Garante que ocupe toda a largura */
+  }
 
-.sidebar-menu.collapsed .menu-content ul li a span {
-  display: none; /* Esconde o texto ao recolher */
+  .menu-item {
+    flex-direction: column; /* Alinha ícones verticalmente dentro de cada item */
+    padding: 0.5rem;
+  }
+
+  .menu-item svg {
+    font-size: 1.5rem; /* Ajusta o tamanho dos ícones para telas menores */
+  }
+
+  .menu-text {
+    display: none; /* Continua escondido nas telas pequenas */
+  }
 }
