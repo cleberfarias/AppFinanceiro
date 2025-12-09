@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+# AppFinanceiro
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Uma aplicação web (React) para controle básico de finanças pessoais/empresariais. Este projeto utiliza React, Firebase e algumas bibliotecas de UI e utilitários (Material UI, Bootstrap, FontAwesome, xlsx) para fornecer cadastro de lançamentos, visualização de saldos e importação/exportação simples.
 
-## Available Scripts
+> Observação: este README foi criado com base na estrutura do repositório e nas dependências listadas em package.json.
 
-In the project directory, you can run:
+## Funcionalidades principais (exemplos)
+- Cadastro de entradas e saídas (receitas e despesas)
+- Visualização de saldo e histórico de lançamentos
+- Importação/exportação de dados em formato Excel (biblioteca xlsx)
+- Persistência em Firebase (Realtime Database / Firestore / Auth conforme configuração do projeto)
+- UI construida com Material UI / Bootstrap e ícones via FontAwesome
 
-### `npm start`
+> Verifique a implementação no diretório `src/` para confirmar as funcionalidades exatas e rotas do projeto.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tecnologias
+- React (react-scripts)
+- Firebase (firebase)
+- Material UI (@mui/material, @mui/icons-material)
+- Bootstrap + bootstrap-icons
+- styled-components, react-icons
+- xlsx (para importação/exportação)
+- FontAwesome (ícones)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Pré-requisitos
+- Node.js (recomendado >= 18)
+- npm
+- Conta no Firebase (para usar hosting, Firestore/Realtime DB e Auth, se aplicável)
+- Firebase CLI (para deploy): `npm install -g firebase-tools` (opcional, só se for realizar deploy)
 
-### `npm test`
+## Instalação e execução local
+1. Clone o repositório:
+   git clone https://github.com/cleberfarias/AppFinanceiro.git
+2. Entre na pasta do projeto:
+   cd AppFinanceiro
+3. Instale as dependências:
+   npm install
+4. Crie um arquivo de variáveis de ambiente (ex.: `.env.local`) com a configuração do Firebase (exemplo abaixo).
+5. Inicie a aplicação em modo de desenvolvimento:
+   npm start
+6. Para gerar o build de produção:
+   npm run build
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Variáveis de ambiente (exemplo)
+Crie um arquivo `.env.local` na raiz com as chaves do seu projeto Firebase. Ajuste os nomes conforme a forma que o projeto consome as variáveis (ex.: process.env.REACT_APP_*).
 
-### `npm run build`
+REACT_APP_FIREBASE_API_KEY=your_api_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+REACT_APP_FIREBASE_APP_ID=your_app_id
+# Opcional: outras variáveis que o projeto utilize
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Observação: não comite arquivos contendo chaves sensíveis.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Configuração e deploy com Firebase (resumo)
+1. Faça login no Firebase CLI:
+   firebase login
+2. Inicialize o projeto (se ainda não estiver configurado):
+   firebase init
+   - Selecione "Hosting" e/ou "Firestore" conforme necessário.
+3. Para implantar:
+   firebase deploy --only hosting
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+A configuração de `firebase.json` e `.firebaserc` já está presente no repositório; verifique e ajuste conforme seu projeto e seu ambiente Firebase.
 
-### `npm run eject`
+## Estrutura do projeto (resumo)
+- public/ — ativos públicos (index.html, icons, etc.)
+- src/ — código-fonte React (componentes, páginas, serviços)
+- firebase.json, .firebaserc — configurações de deploy Firebase
+- package.json — dependências e scripts
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Scripts úteis
+- npm start — executa em modo desenvolvimento
+- npm run build — gera build de produção
+- npm test — executa testes (se houver)
+- npm run eject — ejetar create-react-app (use com cuidado)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Boas práticas e notas
+- Mantenha chaves do Firebase fora do controle de versão.
+- Use commits pequenos e descritivos.
+- Adicione validações e tratamento de erros ao lidar com importação/exportação de arquivos.
+- Se utilizar autenticação, proteja rotas e dados conforme regras do Firebase Security.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Contribuição
+Contribuições são bem-vindas. Abra uma issue para discutir funcionalidades/bugs ou envie um pull request com uma descrição clara das mudanças.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contato
+Desenvolvedor: cleberfarias  
+Repositório: https://github.com/cleberfarias/AppFinanceiro
